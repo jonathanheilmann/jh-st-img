@@ -3,8 +3,7 @@ import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'jh-st-img',
-  styleUrl: 'jh-st-img.scss',
-  shadow: true
+  styleUrl: 'jh-st-img.scss'
 })
 export class JhStImg {
 
@@ -83,7 +82,7 @@ export class JhStImg {
 
     if (this._hasIntersectionObserver) {
       setTimeout(() => {
-        const image: HTMLImageElement = this.el.shadowRoot.querySelector('img');
+        const image: HTMLImageElement = this.el.querySelector('img');
 
         if (image.getAttribute('data-src')) {
           image.setAttribute('src', image.getAttribute('data-src'));
@@ -102,7 +101,7 @@ export class JhStImg {
   }
 
   fallbackLazyLoad() {
-    const image: HTMLImageElement = this.el.shadowRoot.querySelector('img');
+    const image: HTMLImageElement = this.el.querySelector('img');
     if (
       (image.getBoundingClientRect().top <= window.innerHeight && image.getBoundingClientRect().bottom >= 0)
       && getComputedStyle(image).display !== 'none'
@@ -137,7 +136,7 @@ export class JhStImg {
         }
       });
 
-      this.io.observe(this.el.shadowRoot.querySelector('img'));
+      this.io.observe(this.el.querySelector('img'));
     } else {
       // fall back to setTimeout for Safari and IE in handleImage method
       this.handleImage();
