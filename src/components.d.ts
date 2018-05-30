@@ -27,33 +27,37 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface MyComponent {
-      'first': string;
-      'last': string;
+    interface JhStImg {
+      'alt': string;
+      'sources': any;
+      'src': string;
+      'srcset': string;
     }
   }
 
-  interface HTMLMyComponentElement extends StencilComponents.MyComponent, HTMLStencilElement {}
+  interface HTMLJhStImgElement extends StencilComponents.JhStImg, HTMLStencilElement {}
 
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLJhStImgElement: {
+    prototype: HTMLJhStImgElement;
+    new (): HTMLJhStImgElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'jh-st-img': HTMLJhStImgElement;
   }
   interface ElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'jh-st-img': HTMLJhStImgElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'my-component': JSXElements.MyComponentAttributes;
+      'jh-st-img': JSXElements.JhStImgAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+    export interface JhStImgAttributes extends HTMLAttributes {
+      'alt'?: string;
+      'sources'?: any;
+      'src'?: string;
+      'srcset'?: string;
     }
   }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "my-component",
+  "name": "jh-st-img",
   "version": "0.0.1",
-  "description": "Stencil Component Starter",
+  "description": "Stencil Lazy Loading Image Component, supporting picture tag with multiple sources.",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",
@@ -19,22 +19,23 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "^0.9.1",
+    "@stencil/core": "0.9.5",
     "@stencil/dev-server": "latest",
+    "@stencil/sass": "0.0.5",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.1",
     "jest": "^21.2.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/stencil-component-starter.git"
+    "url": "git+https://github.com/jonathanheilmann/jh-st-img.git"
   },
-  "author": "Ionic Team",
+  "author": "Jonathan heilmann",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ionic-team/stencil"
+    "url": "https://github.com/jonathanheilmann/jh-st-img"
   },
-  "homepage": "https://github.com/ionic-team/stencil",
+  "homepage": "https://github.com/jonathanheilmann/jh-st-img",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
