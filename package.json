@@ -1,6 +1,6 @@
 {
   "name": "jh-st-img",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Stencil Lazy Loading Image Component, supporting picture tag with multiple sources.",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
