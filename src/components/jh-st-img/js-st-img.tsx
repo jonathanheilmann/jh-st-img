@@ -152,11 +152,15 @@ export class JhStImg {
   }
 
   render() {
-    return <picture>
-      {this._sources.map((source) => {
-        return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media}/>;
-      })}
-      <img data-src={this.src} data-srcset={this.srcset} alt={this.alt}/>
-    </picture>;
+    if (this._sources.length) {
+      return <picture>
+        {this._sources.map((source) => {
+          return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media}/>;
+        })}
+        <img data-src={this.src} data-srcset={this.srcset} alt={this.alt}/>
+      </picture>;
+    } else {
+      return <img data-src={this.src} data-srcset={this.srcset} alt={this.alt}/>
+    }
   }
 }
