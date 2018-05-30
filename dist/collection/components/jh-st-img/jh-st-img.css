@@ -1,5 +1,6 @@
 :host {
-  display: block; }
+  display: inline-block;
+  line-height: 0; }
 
 img {
   max-width: 100%;
