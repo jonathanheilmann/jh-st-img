@@ -107,11 +107,16 @@ export class JhStImg {
         }
     }
     render() {
-        return h("picture", null,
-            this._sources.map((source) => {
-                return h("source", { sizes: source.sizes, srcSet: source.srcset, type: source.type, media: source.media });
-            }),
-            h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt }));
+        if (this._sources.length) {
+            return h("picture", null,
+                this._sources.map((source) => {
+                    return h("source", { sizes: source.sizes, srcSet: source.srcset, type: source.type, media: source.media });
+                }),
+                h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt }));
+        }
+        else {
+            return h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt });
+        }
     }
     static get is() { return "jh-st-img"; }
     static get encapsulation() { return "shadow"; }
