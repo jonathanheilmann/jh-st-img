@@ -1,9 +1,10 @@
 import '../../stencil.core';
 export declare class JhStImg {
     el: HTMLElement;
+    alt: string;
+    imgClass: string;
     src: string;
     srcset: string;
-    alt: string;
     sources: any;
     _hasIntersectionObserver: boolean;
     _isHandleImageFallback: boolean;

@@ -45,7 +45,7 @@ export class JhStImg {
         }
         if (this._hasIntersectionObserver) {
             setTimeout(() => {
-                const image = this.el.shadowRoot.querySelector('img');
+                const image = this.el.querySelector('img');
                 if (image.getAttribute('data-src')) {
                     image.setAttribute('src', image.getAttribute('data-src'));
                     image.removeAttribute('data-src');
@@ -62,7 +62,7 @@ export class JhStImg {
         }
     }
     fallbackLazyLoad() {
-        const image = this.el.shadowRoot.querySelector('img');
+        const image = this.el.querySelector('img');
         if ((image.getBoundingClientRect().top <= window.innerHeight && image.getBoundingClientRect().bottom >= 0)
             && getComputedStyle(image).display !== 'none') {
             if (image.getAttribute('data-src')) {
@@ -93,7 +93,7 @@ export class JhStImg {
                     this.removeIntersectionObserver();
                 }
             });
-            this.io.observe(this.el.shadowRoot.querySelector('img'));
+            this.io.observe(this.el.querySelector('img'));
         }
         else {
             // fall back to setTimeout for Safari and IE in handleImage method
@@ -112,14 +112,13 @@ export class JhStImg {
                 this._sources.map((source) => {
                     return h("source", { sizes: source.sizes, srcSet: source.srcset, type: source.type, media: source.media });
                 }),
-                h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt }));
+                h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt, class: this.imgClass }));
         }
         else {
-            return h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt });
+            return h("img", { "data-src": this.src, "data-srcset": this.srcset, alt: this.alt, class: this.imgClass });
         }
     }
     static get is() { return "jh-st-img"; }
-    static get encapsulation() { return "shadow"; }
     static get properties() { return {
         "_hasIntersectionObserver": {
             "state": true
@@ -136,6 +135,10 @@ export class JhStImg {
         },
         "el": {
             "elementRef": true
+        },
+        "imgClass": {
+            "type": String,
+            "attr": "img-class"
         },
         "sources": {
             "type": "Any",
