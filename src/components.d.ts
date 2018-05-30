@@ -29,6 +29,7 @@ declare global {
   namespace StencilComponents {
     interface JhStImg {
       'alt': string;
+      'imgClass': string;
       'sources': any;
       'src': string;
       'srcset': string;
@@ -55,6 +56,7 @@ declare global {
   namespace JSXElements {
     export interface JhStImgAttributes extends HTMLAttributes {
       'alt'?: string;
+      'imgClass'?: string;
       'sources'?: any;
       'src'?: string;
       'srcset'?: string;

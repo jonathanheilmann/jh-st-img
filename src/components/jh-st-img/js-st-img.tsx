@@ -9,9 +9,10 @@ export class JhStImg {
 
   @Element() el: HTMLElement;
 
+  @Prop() alt: string;
+  @Prop() imgClass: string;
   @Prop() src: string;
   @Prop() srcset: string;
-  @Prop() alt: string;
   @Prop() sources: any;
 
   @State() _hasIntersectionObserver: boolean;
@@ -154,12 +155,12 @@ export class JhStImg {
     if (this._sources.length) {
       return <picture>
         {this._sources.map((source) => {
-          return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media}/>;
+          return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media} />;
         })}
-        <img data-src={this.src} data-srcset={this.srcset} alt={this.alt}/>
+        <img data-src={this.src} data-srcset={this.srcset} alt={this.alt} class={this.imgClass} />
       </picture>;
     } else {
-      return <img data-src={this.src} data-srcset={this.srcset} alt={this.alt}/>
+      return <img data-src={this.src} data-srcset={this.srcset} alt={this.alt} class={this.imgClass} />
     }
   }
 }
