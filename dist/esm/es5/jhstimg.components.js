@@ -1,3 +1,2 @@
-// jhstimg: Host Data, ES Module/ES5 Target
-
-export var JhStImg = ["jh-st-img",function(){return(import("./bs1r7wuq.js")).then(function(m){return m.JhStImg})},1,[["_hasIntersectionObserver",5],["_isHandleImageFallback",5],["_sources",5],["alt",1,0,1,2],["el",7],["imgClass",1,0,"img-class",2],["sources",1,0,1,1],["src",1,0,1,2],["srcset",1,0,1,2]],0,[["document:scroll","documentScrollHandler",0,1],["window:resize","windowResizeHandler",0,1],["window:orientationchange","windowRrientationchangeHandler"]]];
+// jhstimg: Host Data, ES Module/es5 Target
+export var JhStImg = ["jh-st-img","fukqt619",1,[["_hasIntersectionObserver",16],["_isHandleImageFallback",16],["_sources",16],["alt",1,0,1,2],["el",64],["imgClass",1,0,"img-class",2],["sources",1,0,1,1],["src",1,0,1,2],["srcset",1,0,1,2]],0,[["document:scroll","documentScrollHandler",0,1],["window:resize","windowResizeHandler",0,1],["window:orientationchange","windowRrientationchangeHandler"]]];

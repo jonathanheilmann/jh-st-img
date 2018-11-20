@@ -81,13 +81,8 @@ export class JhStImg {
             return;
         }
         if (this._hasIntersectionObserver) {
-            // Remove old IntersectionObserver
             this.removeIntersectionObserver();
-            // Create new IntersectionObserver
             this.io = new IntersectionObserver((data) => {
-                // because there will only ever be one instance
-                // of the element we are observing
-                // we can just use data[0]
                 if (data[0].isIntersecting) {
                     this.handleImage();
                     this.removeIntersectionObserver();
@@ -96,7 +91,6 @@ export class JhStImg {
             this.io.observe(this.el.querySelector('img'));
         }
         else {
-            // fall back to setTimeout for Safari and IE in handleImage method
             this.handleImage();
         }
     }
