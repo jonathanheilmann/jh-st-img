@@ -1,6 +1,6 @@
 {
   "name": "jh-st-img",
-  "version": "0.0.6",
+  "version": "0.0.7-dev",
   "description": "Stencil Lazy Loading Image Component, supporting picture tag with multiple sources.",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
@@ -11,20 +11,14 @@
   ],
   "scripts": {
     "build": "stencil build",
-    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
-    "serve": "stencil-dev-server",
-    "start": "npm run dev",
-    "test": "jest",
-    "test.watch": "jest --watch"
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {},
   "devDependencies": {
-    "@stencil/core": "0.9.5",
-    "@stencil/dev-server": "latest",
-    "@stencil/sass": "0.0.5",
-    "@stencil/utils": "latest",
-    "@types/jest": "^21.1.1",
-    "jest": "^21.2.1"
+    "@stencil/core": "~0.15.2",
+    "@stencil/sass": "~0.1.1"
   },
   "repository": {
     "type": "git",
