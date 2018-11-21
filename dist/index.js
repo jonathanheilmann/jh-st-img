@@ -1,1 +1,0 @@
-// jhstimg: CommonJS Main
