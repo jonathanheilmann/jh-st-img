@@ -15,5 +15,8 @@ export const config: Config = {
   ],
   plugins: [
     sass()
+  ],
+  copy: [
+    { src: 'test-assets' }
   ]
 };
