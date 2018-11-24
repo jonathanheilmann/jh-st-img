@@ -137,6 +137,15 @@ export class JhStImg {
 
     if (sources) {
       let _sources = typeof sources === 'string' ? JSON.parse(sources) : sources;
+
+      // Safari fails for mime `image/jpg` (see https://stackoverflow.com/questions/35932530/safari-difference-with-image-jpeg-and-img-jpg)
+      // Replace type `image/jpg` by `image/jpeg`
+      for (let i = (_sources.length - 1); i >= 0; i--) {
+        if (_sources[i]['type'] && _sources[i]['type'] === 'image/jpg') {
+          _sources[i]['type'] = 'image/jpeg';
+        }
+      }
+
       this._sources = _sources;
     } else {
       this._sources = [ { sizes: null, srcset: this.src, type: null, media: null } ];
