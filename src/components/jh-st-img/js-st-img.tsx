@@ -12,11 +12,8 @@ export class JhStImg {
   @Prop() alt: string;
   @Prop() imgClass: string;
   @Prop() src: string;
-  @Prop() srcset: string;
   @Prop() sources: any;
 
-  @State() _hasIntersectionObserver: boolean;
-  @State() _isHandleImageFallback: boolean = false;
   @State() _sources: {
     sizes: string,
     srcset: string,
@@ -24,46 +21,53 @@ export class JhStImg {
     media: string
   } [] = [];
 
+  io: IntersectionObserver;
+
+  _hasIntersectionObserver: boolean;
+  _hasPictureElementSupport: boolean;
+  _isFallbackImageLoaded: boolean = false;
+  _isHandleImageFallback: boolean = false;
+  _isUnsupportedPictureElementImageLoaded: boolean = false;
+
   @Watch('src')
   srcWatchHandler() {
-    this.addIntersectionObserver();
-  }
+    this._isUnsupportedPictureElementImageLoaded = false;
 
-  @Watch('srcset')
-  srcsetWatchHandler() {
     this.addIntersectionObserver();
   }
 
   @Watch('sources')
-  sourcesWatchHandler() {
+  sourcesWatchHandler(newSources) {
+    this.updateSources(newSources, true);
     this.addIntersectionObserver();
   }
 
   @Listen('document:scroll')
   documentScrollHandler() {
-    if (this._isHandleImageFallback) {
-      this.fallbackLazyLoad();
+    if (this._hasIntersectionObserver === false) {
+      this.fallback();
     }
   }
 
   @Listen('window:resize')
   windowResizeHandler() {
-    if (this._isHandleImageFallback) {
-      this.fallbackLazyLoad();
+    if (this._hasIntersectionObserver === false) {
+      this.fallback();
     }
   }
 
   @Listen('window:orientationchange')
   windowRrientationchangeHandler() {
-    if (this._isHandleImageFallback) {
-      this.fallbackLazyLoad();
+    if (this._hasIntersectionObserver === false) {
+      this.fallback();
     }
   }
 
-  io: IntersectionObserver;
-
   componentWillLoad() {
     this._hasIntersectionObserver = 'IntersectionObserver' in window;
+
+    const pictureElement = document.createElement('picture');
+    this._hasPictureElementSupport = pictureElement.toString().includes('HTMLPictureElement');
   }
 
   componentDidLoad() {
@@ -74,53 +78,9 @@ export class JhStImg {
     this.removeIntersectionObserver();
   }
 
-  handleImage() {
-    if (this.sources) {
-      this._sources = typeof this.sources === 'string' ? JSON.parse(this.sources) : this.sources;
-    } else {
-      this._sources = [];
-    }
-
-    if (this._hasIntersectionObserver) {
-      setTimeout(() => {
-        const image: HTMLImageElement = this.el.querySelector('img');
-
-        if (image.getAttribute('data-src')) {
-          image.setAttribute('src', image.getAttribute('data-src'));
-          image.removeAttribute('data-src');
-        }
-        if (image.getAttribute('data-srcset')) {
-          image.setAttribute('srcset', image.getAttribute('data-srcset'));
-          image.removeAttribute('data-srcset');
-        }
-      }, this._sources.length === 0 ? 0 : 300);
-    } else {
-      this._isHandleImageFallback = true;
-
-      this.fallbackLazyLoad();
-    }
-  }
-
-  fallbackLazyLoad() {
-    const image: HTMLImageElement = this.el.querySelector('img');
-    if (
-      (image.getBoundingClientRect().top <= window.innerHeight && image.getBoundingClientRect().bottom >= 0)
-      && getComputedStyle(image).display !== 'none'
-    ) {
-      if (image.getAttribute('data-src')) {
-        image.setAttribute('src', image.getAttribute('data-src'));
-        image.removeAttribute('data-src');
-      }
-      if (image.getAttribute('data-srcset')) {
-        image.setAttribute('srcset', image.getAttribute('data-srcset'));
-        image.removeAttribute('data-srcset');
-      }
-    }
-  };
-
   addIntersectionObserver() {
-    if (!this.src && !this.srcset) {
-      return;
+    if (!this.src) {
+      throw new Error('Required attribute in web component `jh-st-img` not set.');
     }
 
     if (this._hasIntersectionObserver) {
@@ -132,15 +92,54 @@ export class JhStImg {
         // of the element we are observing
         // we can just use data[0]
         if (data[ 0 ].isIntersecting) {
-          this.handleImage();
+          this.updateSources(this.sources);
+          this.handleUnsupportedPictureElement();
           this.removeIntersectionObserver();
         }
       });
 
       this.io.observe(this.el.querySelector('img'));
-    } else {
+    } else if (this._isFallbackImageLoaded === false) {
       // fall back to setTimeout for Safari and IE in handleImage method
-      this.handleImage();
+      this.fallback();
+    }
+  }
+
+  handleUnsupportedPictureElement() {
+    if (this._hasPictureElementSupport === false && this._isUnsupportedPictureElementImageLoaded === false) {
+      const image: HTMLImageElement = this.el.querySelector('img');
+      image.setAttribute('src', this.src);
+
+      this._isUnsupportedPictureElementImageLoaded = true;
+    }
+  }
+
+  fallback() {
+    if (this._isFallbackImageLoaded === false) {
+      const image: HTMLImageElement = this.el.querySelector('img');
+
+      if (
+        (image.getBoundingClientRect().top <= window.innerHeight && image.getBoundingClientRect().bottom >= 0)
+        && getComputedStyle(image).display !== 'none'
+      ) {
+        this.updateSources(this.sources);
+        this.handleUnsupportedPictureElement();
+
+        this._isFallbackImageLoaded = true;
+      }
+    }
+  };
+
+  updateSources(sources, forceUpdate = false) {
+    if (this._sources.length !== 0 && forceUpdate === false) {
+      return;
+    }
+
+    if (sources) {
+      let _sources = typeof sources === 'string' ? JSON.parse(sources) : sources;
+      this._sources = _sources;
+    } else {
+      this._sources = [ { sizes: null, srcset: this.src, type: null, media: null } ];
     }
   }
 
@@ -152,15 +151,11 @@ export class JhStImg {
   }
 
   render() {
-    if (this._sources.length) {
-      return <picture>
-        {this._sources.map((source) => {
-          return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media} />;
-        })}
-        <img data-src={this.src} data-srcset={this.srcset} alt={this.alt} class={this.imgClass} />
-      </picture>;
-    } else {
-      return <img data-src={this.src} data-srcset={this.srcset} alt={this.alt} class={this.imgClass} />
-    }
+    return <picture>
+      {this._sources.map((source) => {
+        return <source sizes={source.sizes} srcSet={source.srcset} type={source.type} media={source.media}/>;
+      })}
+      <img src="" alt={this.alt} class={this.imgClass}/>
+    </picture>;
   }
 }
