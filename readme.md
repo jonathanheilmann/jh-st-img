@@ -21,13 +21,13 @@ Properties:
 - alt (string): the value you want to use for the alt property of the image https://www.w3schools.com/tags/att_img_alt.asp
 - imgClass (string): the class(es) you want to set as class property of the image
 - src (string): the path or url to the image you want to load
-- sources (string|JsStImgSource[]): the sources to add to picture https://www.w3schools.com/tags/tag_picture.asp, as 
- JsStImgSource type array or JSON encoded string (for vanilla HTML page usage)
+- sources (string|JhStImgSource[]): the sources to add to picture https://www.w3schools.com/tags/tag_picture.asp, as 
+ JhStImgSource type array or JSON encoded string (for vanilla HTML page usage)
 
 Types:
 
 ```typescript
-type JsStImgSource = {
+type JhStImgSource = {
   sizes?: string
   srcset: string
   type?: string

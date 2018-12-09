@@ -1,4 +1,4 @@
-export type JsStImgSource = {
+export type JhStImgSource = {
   sizes?: string
   srcset: string
   type?: string

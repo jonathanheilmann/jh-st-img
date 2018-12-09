@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
-import { JsStImgSource } from './jh-st-img-types';
+import { JhStImgSource } from './jh-st-img-types';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class JhStImg {
   @Prop() src: string;
   @Prop() sources: any;
 
-  @State() _sources: JsStImgSource[] = [];
+  @State() _sources: JhStImgSource[] = [];
 
   io: IntersectionObserver;
 
