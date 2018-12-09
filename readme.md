@@ -57,3 +57,21 @@ Vanilla HTML page, two image sizes with alternative webp image:
  </jh-st-img>
 ```
 
+## Changelog
+
+### 1.0.0
+
+BREAKING:
+- Typo in types (#8)
+
+TASKS:
+- Add changelog to readme.md (#10)
+- Remove github templates (#9)
+
+### 0.1.1
+
+- First public release
+
+### 0.1.0
+
+- First release
